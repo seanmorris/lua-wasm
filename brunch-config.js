@@ -15,6 +15,6 @@ module.exports = {
 	}
 	, paths: {
 		public: 'docs'
-		, watched: ['source/']
+		, watched: ['source/', 'build/']
 	}
 };
