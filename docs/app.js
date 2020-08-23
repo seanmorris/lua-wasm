@@ -2501,7 +2501,7 @@ var Lua = function () {
       // inputs
       var method = 'native-wasm';
       var wasmTextFile = 'lua-web-bin.wast';
-      var wasmBinaryFile = 'lua-web-bin.wasm';
+      var wasmBinaryFile = '/lua-wasm/lua-web-bin.wasm';
       var asmjsCodeFile = 'lua-web-bin.temp.asm.js';
 
       if (!isDataURI(wasmTextFile)) {
