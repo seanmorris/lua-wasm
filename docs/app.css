@@ -144,7 +144,7 @@ div.panel > div {
 
 label {
 	border: 2px solid;
-	border-image: url(/border.png) 2 2 2 2;
+	border-image: url(/lua-wasm/border.png) 2 2 2 2;
 	background-color: #c3c3c3;
 	padding: 0.25em; 
 }
