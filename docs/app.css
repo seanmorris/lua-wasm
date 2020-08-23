@@ -27,7 +27,7 @@ body {
 	margin: 0.5em;
 	padding: 0.5em 0em;
 	border: 2px solid;
-	border-image: url(/border-inset.png) 2 2 2 2;
+	border-image: url(/lua-wasm/border-inset.png) 2 2 2 2;
 	align-items: center;
 }
 
@@ -49,7 +49,7 @@ body {
 	min-width: 8em;
 	font-weight: bold;
 	border: 2px solid;
-	border-image: url(/border.png) 2 2 2 2;
+	border-image: url(/lua-wasm/border.png) 2 2 2 2;
 	align-self: center;
 }
 
@@ -78,7 +78,7 @@ body {
 
 label:active,
 .row.toolbar button:active {
-	border-image: url(/border-inset.png) 2 2 2 2;
+	border-image: url(/lua-wasm/border-inset.png) 2 2 2 2;
 }
 
 h1 {
@@ -130,7 +130,7 @@ div.panel {
 div.panel > div {
 	background-color: white;
 	border: 2px solid;
-	border-image: url(/border-inset.png) 2 2 2 2;
+	border-image: url(/lua-wasm/border-inset.png) 2 2 2 2;
 	flex-direction: column;
 	display: flex;
 	flex: 1;
