@@ -876,280 +876,7 @@ process.chdir = function (dir) {
 process.umask = function() { return 0; };
   })();
 });
-require.register("source/Lua.js", function(exports, require, module) {
-"use strict";
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.Lua = void 0;
-
-function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
-
-function _createForOfIteratorHelper(o) { if (typeof Symbol === "undefined" || o[Symbol.iterator] == null) { if (Array.isArray(o) || (o = _unsupportedIterableToArray(o))) { var i = 0; var F = function F() {}; return { s: F, n: function n() { if (i >= o.length) return { done: true }; return { done: false, value: o[i++] }; }, e: function e(_e) { throw _e; }, f: F }; } throw new TypeError("Invalid attempt to iterate non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); } var it, normalCompletion = true, didErr = false, err; return { s: function s() { it = o[Symbol.iterator](); }, n: function n() { var step = it.next(); normalCompletion = step.done; return step; }, e: function e(_e2) { didErr = true; err = _e2; }, f: function f() { try { if (!normalCompletion && it["return"] != null) it["return"](); } finally { if (didErr) throw err; } } }; }
-
-function _unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return _arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(n); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen); }
-
-function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) { arr2[i] = arr[i]; } return arr2; }
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
-
-function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
-
-function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
-
-function _createSuper(Derived) { return function () { var Super = _getPrototypeOf(Derived), result; if (_isNativeReflectConstruct()) { var NewTarget = _getPrototypeOf(this).constructor; result = Reflect.construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _possibleConstructorReturn(this, result); }; }
-
-function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) === "object" || typeof call === "function")) { return call; } return _assertThisInitialized(self); }
-
-function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
-
-function _wrapNativeSuper(Class) { var _cache = typeof Map === "function" ? new Map() : undefined; _wrapNativeSuper = function _wrapNativeSuper(Class) { if (Class === null || !_isNativeFunction(Class)) return Class; if (typeof Class !== "function") { throw new TypeError("Super expression must either be null or a function"); } if (typeof _cache !== "undefined") { if (_cache.has(Class)) return _cache.get(Class); _cache.set(Class, Wrapper); } function Wrapper() { return _construct(Class, arguments, _getPrototypeOf(this).constructor); } Wrapper.prototype = Object.create(Class.prototype, { constructor: { value: Wrapper, enumerable: false, writable: true, configurable: true } }); return _setPrototypeOf(Wrapper, Class); }; return _wrapNativeSuper(Class); }
-
-function _construct(Parent, args, Class) { if (_isNativeReflectConstruct()) { _construct = Reflect.construct; } else { _construct = function _construct(Parent, args, Class) { var a = [null]; a.push.apply(a, args); var Constructor = Function.bind.apply(Parent, a); var instance = new Constructor(); if (Class) _setPrototypeOf(instance, Class.prototype); return instance; }; } return _construct.apply(null, arguments); }
-
-function _isNativeReflectConstruct() { if (typeof Reflect === "undefined" || !Reflect.construct) return false; if (Reflect.construct.sham) return false; if (typeof Proxy === "function") return true; try { Date.prototype.toString.call(Reflect.construct(Date, [], function () {})); return true; } catch (e) { return false; } }
-
-function _isNativeFunction(fn) { return Function.toString.call(fn).indexOf("[native code]") !== -1; }
-
-function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
-
-function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
-
-var LuaBinary = require('./lua-web-bin');
-
-var Lua = /*#__PURE__*/function (_EventTarget) {
-  _inherits(Lua, _EventTarget);
-
-  var _super = _createSuper(Lua);
-
-  function Lua() {
-    var _this;
-
-    _classCallCheck(this, Lua);
-
-    _this = _super.call(this);
-    var FLAGS = {};
-    _this.returnValue = -1;
-
-    _this.onerror = function () {};
-
-    _this.onoutput = function () {};
-
-    _this.onready = function () {};
-
-    _this.binary = new LuaBinary({
-      postRun: function postRun() {
-        var event = new CustomEvent('ready');
-
-        _this.dispatchEvent(event);
-
-        _this.onready(event);
-      },
-      print: function print() {
-        for (var _len = arguments.length, chunks = new Array(_len), _key = 0; _key < _len; _key++) {
-          chunks[_key] = arguments[_key];
-        }
-
-        var event = new CustomEvent('output', {
-          detail: chunks.map(function (c) {
-            return c + "\n";
-          })
-        });
-
-        _this.dispatchEvent(event);
-
-        _this.onoutput(event);
-      },
-      printErr: function printErr() {
-        for (var _len2 = arguments.length, chunks = new Array(_len2), _key2 = 0; _key2 < _len2; _key2++) {
-          chunks[_key2] = arguments[_key2];
-        }
-
-        var event = new CustomEvent('error', {
-          detail: chunks.map(function (c) {
-            return c + "\n";
-          })
-        });
-
-        _this.onerror(event);
-
-        _this.dispatchEvent(event);
-      }
-    });
-
-    _this.binary.then(function (bin) {
-      var retVal = bin.ccall('lua_init', 'number', ["string"], []);
-      return bin;
-    });
-
-    return _this;
-  }
-
-  _createClass(Lua, [{
-    key: "run",
-    value: function run(code) {
-      return this.binary.then(function (bin) {
-        var retVal = bin.ccall('lua_run', 'number', ["string"], [code]);
-        return retVal;
-      });
-    }
-  }, {
-    key: "refresh",
-    value: function refresh() {
-      return this.binary.then(function (php) {
-        return php.ccall('lua_refresh', 'number', [], []);
-      });
-    }
-  }]);
-
-  return Lua;
-}( /*#__PURE__*/_wrapNativeSuper(EventTarget));
-
-exports.Lua = Lua;
-
-if (window && document) {
-  var lua = new Lua();
-
-  var runScriptTag = function runScriptTag(element) {
-    var src = element.getAttribute('src');
-
-    if (src) {
-      fetch(src).then(function (r) {
-        return r.text();
-      }).then(function (r) {
-        lua.run(r).then(function (exit) {
-          return console.log(exit);
-        });
-      });
-      return;
-    }
-
-    var inlineCode = element.innerText.trim();
-
-    if (inlineCode) {
-      lua.run(inlineCode);
-    }
-  };
-
-  lua.addEventListener('ready', function () {
-    var phpSelector = 'script[type="text/lua"]';
-    var htmlNode = document.body.parentElement;
-    var observer = new MutationObserver(function (mutations, observer) {
-      var _iterator = _createForOfIteratorHelper(mutations),
-          _step;
-
-      try {
-        for (_iterator.s(); !(_step = _iterator.n()).done;) {
-          var mutation = _step.value;
-
-          var _iterator2 = _createForOfIteratorHelper(mutation.addedNodes),
-              _step2;
-
-          try {
-            for (_iterator2.s(); !(_step2 = _iterator2.n()).done;) {
-              var addedNode = _step2.value;
-
-              if (!addedNode.matches || !addedNode.matches(phpSelector)) {
-                continue;
-              }
-
-              runScriptTag(addedNode);
-            }
-          } catch (err) {
-            _iterator2.e(err);
-          } finally {
-            _iterator2.f();
-          }
-        }
-      } catch (err) {
-        _iterator.e(err);
-      } finally {
-        _iterator.f();
-      }
-    });
-    observer.observe(htmlNode, {
-      childList: true,
-      subtree: true
-    });
-    var phpNodes = document.querySelectorAll(phpSelector);
-
-    var _iterator3 = _createForOfIteratorHelper(phpNodes),
-        _step3;
-
-    try {
-      for (_iterator3.s(); !(_step3 = _iterator3.n()).done;) {
-        var phpNode = _step3.value;
-        var code = phpNode.innerText.trim();
-        runScriptTag(phpNode);
-      }
-    } catch (err) {
-      _iterator3.e(err);
-    } finally {
-      _iterator3.f();
-    }
-  });
-}
-});
-
-;require.register("source/initialize.js", function(exports, require, module) {
-"use strict";
-
-document.addEventListener('DOMContentLoaded', function () {
-  var Lua = require('./Lua').Lua;
-
-  var lua = new Lua();
-  lua.addEventListener('ready', function (event) {
-    console.log('Lua ready!');
-    lua.run('for i=1,10 do print(i) end');
-  });
-  lua.addEventListener('output', function (event) {
-    console.log(event.detail.join("\n")); // outputArea.write(event.detail.join("\n"));
-  }); // console.log(LuaBin, 123);
-  // const lua = new LuaBin({
-  // 	postRun: () => {
-  // 		console.log('Module ready!');
-  // 		lua.ccall(
-  // 			'lua_init'
-  // 			, 'number'
-  // 			, []
-  // 			, []
-  // 		);
-  // 		lua.ccall(
-  // 			'lua_run'
-  // 			, 'number'
-  // 			, ['string']
-  // 			, ['for i=1,10 do print(i) end']
-  // 		);
-  // 		lua.ccall(
-  // 			'lua_run'
-  // 			, 'number'
-  // 			, ['string']
-  // 			, ['x=10']
-  // 		);
-  // 		lua.ccall(
-  // 			'lua_run'
-  // 			, 'number'
-  // 			, ['string']
-  // 			, ['print("" .. x .. "\\n")']
-  // 		);
-  // 	}
-  // 	, 'print': (text) => {
-  // 		console.log('Out:' + text);
-  // 	}
-  // 	, 'printErr': function(text) {
-  // 		console.error('Err: ' + text);
-  // 	}
-  // 	, wasmMemory: new WebAssembly.Memory({
-  // 		initial:  128
-  // 	})
-  // });
-});
-});
-
-require.register("source/lua-web-bin.js", function(exports, require, module) {
+require.register("build/lua-web-bin.js", function(exports, require, module) {
 "use strict";
 
 function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
@@ -3042,7 +2769,7 @@ var Lua = function () {
 
     var ASM_CONSTS = [];
     STATIC_BASE = GLOBAL_BASE;
-    STATICTOP = STATIC_BASE + 20112;
+    STATICTOP = STATIC_BASE + 20128;
     /* global initializers */
 
     __ATINIT__.push({
@@ -3055,7 +2782,7 @@ var Lua = function () {
       }
     });
 
-    var STATIC_BUMP = 20112;
+    var STATIC_BUMP = 20128;
     Module["STATIC_BASE"] = STATIC_BASE;
     Module["STATIC_BUMP"] = STATIC_BUMP;
     /* no memory initializer */
@@ -9967,6 +9694,279 @@ var Lua = function () {
 if ((typeof exports === "undefined" ? "undefined" : _typeof(exports)) === 'object' && (typeof module === "undefined" ? "undefined" : _typeof(module)) === 'object') module.exports = Lua;else if (typeof define === 'function' && define['amd']) define([], function () {
   return Lua;
 });else if ((typeof exports === "undefined" ? "undefined" : _typeof(exports)) === 'object') exports["Lua"] = Lua;
+});
+
+require.register("source/Lua.js", function(exports, require, module) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.Lua = void 0;
+
+function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
+
+function _createForOfIteratorHelper(o) { if (typeof Symbol === "undefined" || o[Symbol.iterator] == null) { if (Array.isArray(o) || (o = _unsupportedIterableToArray(o))) { var i = 0; var F = function F() {}; return { s: F, n: function n() { if (i >= o.length) return { done: true }; return { done: false, value: o[i++] }; }, e: function e(_e) { throw _e; }, f: F }; } throw new TypeError("Invalid attempt to iterate non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); } var it, normalCompletion = true, didErr = false, err; return { s: function s() { it = o[Symbol.iterator](); }, n: function n() { var step = it.next(); normalCompletion = step.done; return step; }, e: function e(_e2) { didErr = true; err = _e2; }, f: function f() { try { if (!normalCompletion && it["return"] != null) it["return"](); } finally { if (didErr) throw err; } } }; }
+
+function _unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return _arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(n); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen); }
+
+function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) { arr2[i] = arr[i]; } return arr2; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
+
+function _createSuper(Derived) { return function () { var Super = _getPrototypeOf(Derived), result; if (_isNativeReflectConstruct()) { var NewTarget = _getPrototypeOf(this).constructor; result = Reflect.construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _possibleConstructorReturn(this, result); }; }
+
+function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) === "object" || typeof call === "function")) { return call; } return _assertThisInitialized(self); }
+
+function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
+
+function _wrapNativeSuper(Class) { var _cache = typeof Map === "function" ? new Map() : undefined; _wrapNativeSuper = function _wrapNativeSuper(Class) { if (Class === null || !_isNativeFunction(Class)) return Class; if (typeof Class !== "function") { throw new TypeError("Super expression must either be null or a function"); } if (typeof _cache !== "undefined") { if (_cache.has(Class)) return _cache.get(Class); _cache.set(Class, Wrapper); } function Wrapper() { return _construct(Class, arguments, _getPrototypeOf(this).constructor); } Wrapper.prototype = Object.create(Class.prototype, { constructor: { value: Wrapper, enumerable: false, writable: true, configurable: true } }); return _setPrototypeOf(Wrapper, Class); }; return _wrapNativeSuper(Class); }
+
+function _construct(Parent, args, Class) { if (_isNativeReflectConstruct()) { _construct = Reflect.construct; } else { _construct = function _construct(Parent, args, Class) { var a = [null]; a.push.apply(a, args); var Constructor = Function.bind.apply(Parent, a); var instance = new Constructor(); if (Class) _setPrototypeOf(instance, Class.prototype); return instance; }; } return _construct.apply(null, arguments); }
+
+function _isNativeReflectConstruct() { if (typeof Reflect === "undefined" || !Reflect.construct) return false; if (Reflect.construct.sham) return false; if (typeof Proxy === "function") return true; try { Date.prototype.toString.call(Reflect.construct(Date, [], function () {})); return true; } catch (e) { return false; } }
+
+function _isNativeFunction(fn) { return Function.toString.call(fn).indexOf("[native code]") !== -1; }
+
+function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
+
+function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
+
+var LuaBinary = require('build/lua-web-bin');
+
+var Lua = /*#__PURE__*/function (_EventTarget) {
+  _inherits(Lua, _EventTarget);
+
+  var _super = _createSuper(Lua);
+
+  function Lua() {
+    var _this;
+
+    _classCallCheck(this, Lua);
+
+    _this = _super.call(this);
+    var FLAGS = {};
+    _this.returnValue = -1;
+
+    _this.onerror = function () {};
+
+    _this.onoutput = function () {};
+
+    _this.onready = function () {};
+
+    _this.binary = new LuaBinary({
+      postRun: function postRun() {
+        var event = new CustomEvent('ready');
+
+        _this.dispatchEvent(event);
+
+        _this.onready(event);
+      },
+      print: function print() {
+        for (var _len = arguments.length, chunks = new Array(_len), _key = 0; _key < _len; _key++) {
+          chunks[_key] = arguments[_key];
+        }
+
+        var event = new CustomEvent('output', {
+          detail: chunks.map(function (c) {
+            return c + "\n";
+          })
+        });
+
+        _this.dispatchEvent(event);
+
+        _this.onoutput(event);
+      },
+      printErr: function printErr() {
+        for (var _len2 = arguments.length, chunks = new Array(_len2), _key2 = 0; _key2 < _len2; _key2++) {
+          chunks[_key2] = arguments[_key2];
+        }
+
+        var event = new CustomEvent('error', {
+          detail: chunks.map(function (c) {
+            return c + "\n";
+          })
+        });
+
+        _this.onerror(event);
+
+        _this.dispatchEvent(event);
+      }
+    });
+
+    _this.binary.then(function (bin) {
+      var retVal = bin.ccall('lua_init', 'number', ["string"], []);
+      return bin;
+    });
+
+    return _this;
+  }
+
+  _createClass(Lua, [{
+    key: "run",
+    value: function run(code) {
+      return this.binary.then(function (bin) {
+        var retVal = bin.ccall('lua_run', 'number', ["string"], [code]);
+        return retVal;
+      });
+    }
+  }, {
+    key: "refresh",
+    value: function refresh() {
+      return this.binary.then(function (php) {
+        return php.ccall('lua_refresh', 'number', [], []);
+      });
+    }
+  }]);
+
+  return Lua;
+}( /*#__PURE__*/_wrapNativeSuper(EventTarget));
+
+exports.Lua = Lua;
+
+if (window && document) {
+  var lua = new Lua();
+
+  var runScriptTag = function runScriptTag(element) {
+    var src = element.getAttribute('src');
+
+    if (src) {
+      fetch(src).then(function (r) {
+        return r.text();
+      }).then(function (r) {
+        lua.run(r).then(function (exit) {
+          return console.log(exit);
+        });
+      });
+      return;
+    }
+
+    var inlineCode = element.innerText.trim();
+
+    if (inlineCode) {
+      lua.run(inlineCode);
+    }
+  };
+
+  lua.addEventListener('ready', function () {
+    var phpSelector = 'script[type="text/lua"]';
+    var htmlNode = document.body.parentElement;
+    var observer = new MutationObserver(function (mutations, observer) {
+      var _iterator = _createForOfIteratorHelper(mutations),
+          _step;
+
+      try {
+        for (_iterator.s(); !(_step = _iterator.n()).done;) {
+          var mutation = _step.value;
+
+          var _iterator2 = _createForOfIteratorHelper(mutation.addedNodes),
+              _step2;
+
+          try {
+            for (_iterator2.s(); !(_step2 = _iterator2.n()).done;) {
+              var addedNode = _step2.value;
+
+              if (!addedNode.matches || !addedNode.matches(phpSelector)) {
+                continue;
+              }
+
+              runScriptTag(addedNode);
+            }
+          } catch (err) {
+            _iterator2.e(err);
+          } finally {
+            _iterator2.f();
+          }
+        }
+      } catch (err) {
+        _iterator.e(err);
+      } finally {
+        _iterator.f();
+      }
+    });
+    observer.observe(htmlNode, {
+      childList: true,
+      subtree: true
+    });
+    var phpNodes = document.querySelectorAll(phpSelector);
+
+    var _iterator3 = _createForOfIteratorHelper(phpNodes),
+        _step3;
+
+    try {
+      for (_iterator3.s(); !(_step3 = _iterator3.n()).done;) {
+        var phpNode = _step3.value;
+        var code = phpNode.innerText.trim();
+        runScriptTag(phpNode);
+      }
+    } catch (err) {
+      _iterator3.e(err);
+    } finally {
+      _iterator3.f();
+    }
+  });
+}
+});
+
+;require.register("source/initialize.js", function(exports, require, module) {
+"use strict";
+
+document.addEventListener('DOMContentLoaded', function () {
+  var Lua = require('./Lua').Lua;
+
+  var lua = new Lua();
+  lua.addEventListener('ready', function (event) {
+    console.log('Lua ready!');
+    lua.run('for i=1,10 do print(i) end');
+  });
+  lua.addEventListener('output', function (event) {
+    console.log(event.detail.join("\n")); // outputArea.write(event.detail.join("\n"));
+  }); // console.log(LuaBin, 123);
+  // const lua = new LuaBin({
+  // 	postRun: () => {
+  // 		console.log('Module ready!');
+  // 		lua.ccall(
+  // 			'lua_init'
+  // 			, 'number'
+  // 			, []
+  // 			, []
+  // 		);
+  // 		lua.ccall(
+  // 			'lua_run'
+  // 			, 'number'
+  // 			, ['string']
+  // 			, ['for i=1,10 do print(i) end']
+  // 		);
+  // 		lua.ccall(
+  // 			'lua_run'
+  // 			, 'number'
+  // 			, ['string']
+  // 			, ['x=10']
+  // 		);
+  // 		lua.ccall(
+  // 			'lua_run'
+  // 			, 'number'
+  // 			, ['string']
+  // 			, ['print("" .. x .. "\\n")']
+  // 		);
+  // 	}
+  // 	, 'print': (text) => {
+  // 		console.log('Out:' + text);
+  // 	}
+  // 	, 'printErr': function(text) {
+  // 		console.error('Err: ' + text);
+  // 	}
+  // 	, wasmMemory: new WebAssembly.Memory({
+  // 		initial:  128
+  // 	})
+  // });
+});
 });
 
 require.alias("path-browserify/index.js", "path");

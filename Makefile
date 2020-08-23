@@ -1,6 +1,6 @@
 .PHONY: build clean
 
-build: lua/makefile index.js lua-web.wasm
+build: lua/makefile Lua.js lua-web.wasm
 
 Lua.js: source/Lua.js Makefile
 	npm run build

@@ -21,5 +21,10 @@
 		"clean-css-brunch": "^3.0.0",
 		"raw-brunch": "^1.0.2",
 		"uglify-js-brunch": "^2.10.0"
-	}
+	},
+	"files":[
+		"lua-web-bin.wasm",
+		"lua-web-bin.js",
+		"Lua.js"
+	]
 }

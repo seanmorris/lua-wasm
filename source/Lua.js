@@ -1,4 +1,4 @@
-const LuaBinary = require('./lua-web-bin');
+const LuaBinary = require('build/lua-web-bin');
 
 export class Lua extends EventTarget
 {
