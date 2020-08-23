@@ -1,0 +1,156 @@
+@font-face {
+    src: url('fsex302-webfont.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+	font-family: 'fixedsys';
+}
+
+body {
+	font-family: 'fixedsys';
+	display: flex;
+	flex-direction: column;
+	align-items: stretch;
+	height: 100vh;
+	padding: 0px;
+	margin: 0px;
+	background-color: #aaa;
+}
+
+
+.output .row {
+	background-color: #CCC;
+	padding: 0.5em 0.5em;
+	border-bottom: 1px white solid;
+}
+
+.row.toolbar {
+	margin: 0.5em;
+	padding: 0.5em 0em;
+	border: 2px solid;
+	border-image: url(/border-inset.png) 2 2 2 2;
+	align-items: center;
+}
+
+.row.toolbar > div{
+	display: flex;
+	justify-content: flex-end;
+	padding: 0em 0.5em;
+	flex: 1;
+	flex-direction: row;
+}
+
+.row.toolbar > div .start{
+	align-items: center;
+	flex: 1;
+}
+
+.row.toolbar button {
+	padding: 0.75em;
+	min-width: 8em;
+	font-weight: bold;
+	border: 2px solid;
+	border-image: url(/border.png) 2 2 2 2;
+	align-self: center;
+}
+
+*:focus {
+	outline-style: dotted;
+	outline-color: black;
+}
+
+.row:focus {
+	background-color: #000082;
+	border-bottom: 1px #000082 solid;
+	color: #FFF;
+}
+
+.row.toolbar.header{
+	background-color: #999;	
+}
+
+.row.toolbar.status {
+	padding: 0;
+}
+
+.row.toolbar.status > div {
+	padding: 0.25em;
+}
+
+label:active,
+.row.toolbar button:active {
+	border-image: url(/border-inset.png) 2 2 2 2;
+}
+
+h1 {
+	margin: 0em;
+	margin: 0.25em;
+}
+
+.row {
+	display: flex;
+	flex-direction: row;
+}
+
+body > div {
+	display: flex;
+	flex-direction: row;
+}
+
+.row.body {
+	flex-grow: 1;
+}
+
+div.column {
+	position: relative;
+	flex: 1;
+}
+
+div.column .scroller {
+	position: absolute;
+	top: 0px;
+	left: 0px;
+	bottom: 0px;
+	right: 0px;
+	overflow-y: auto;
+	overflow-x: auto;
+}
+
+div.panel {
+    font-family: 'fixedsys';
+	display: flex;
+	position: relative;
+	background-color: #aaa;
+	flex-direction: column;
+	box-sizing: border-box;
+	padding: 0.5em;
+	flex: 1;
+
+}
+
+div.panel > div {
+	background-color: white;
+	border: 2px solid;
+	border-image: url(/border-inset.png) 2 2 2 2;
+	flex-direction: column;
+	display: flex;
+	flex: 1;
+}
+
+.liquid{
+	display: flex;
+	flex-direction: column;
+	flex: 1;
+}
+
+label {
+	border: 2px solid;
+	border-image: url(/border.png) 2 2 2 2;
+	background-color: #c3c3c3;
+	padding: 0.25em; 
+}
+
+pre {
+	flex: 1;
+}
+
+/*# sourceMappingURL=app.css.map*/

@@ -1,6 +1,50 @@
-<html>
-<body>
+<!DOCTYPE html>
+<head>
+<style>@import url('/app.css')</style>
 <script src="/app.js"></script>
 <script>require('source/initialize');</script>
+<script src="//ajaxorg.github.io/ace-builds/src-min/ace.js" type="text/javascript" charset="utf-8"></script>
+</head>
+
+<body>
+	<div class = "row header toolbar">
+		<div>
+			<div class = "row start">
+				<img src = "sean-icon.png" />
+				<h1>lua-wasm</h1>
+			</div>
+			<button data-run>run</button>
+		</div>
+		<div>
+		</div>
+	</div>
+
+	<div class = "row">
+		<div class = "panel">
+			<div class = "input">
+				<label>Input Lua Code</label>
+				<textarea>
+	for i=1, 10 do
+	    print(i)
+	end
+	</textarea>
+			</div>
+		</div>
+		<div class = "panel">
+			<div>
+				<label>Output</label>
+				<div class = "output liquid">
+					<div class = "column"></div>
+				</div>
+			</div>
+		</div>
+	</div>
 </body>
-</html>
+
+
+<!-- <body>
+	
+	
+	<div class = "row footer">foot</div>
+</body>
+ -->

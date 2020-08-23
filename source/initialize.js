@@ -1,81 +1,44 @@
 document.addEventListener('DOMContentLoaded', function() {
 
-	const Lua = require('./Lua').Lua;
+	const input  = document.querySelector('.input  textarea');
+	const output = document.querySelector('.output > * > *');
+	const run    = document.querySelector('[data-run]');
+	const status = document.querySelector('[data-status]');
 
+	status.innerText = 'Loading...';
+
+	const editor = ace.edit(input);
+	editor.session.setMode("ace/mode/lua");
+
+	const Lua = require('./Lua').Lua;
 	const lua = new Lua;
 
-
 	lua.addEventListener('ready', (event) => {
-	
-		console.log('Lua ready!');
+		status.innerText = 'Lua loaded & ready!';
+		run.addEventListener('click', () => {
 
-		lua.run('for i=1,10 do print(i) end');
-	
+			status.innerText = 'Executing...';
+
+			while(output.firstChild)
+			{
+				output.firstChild.remove();
+			}
+			lua.run(editor.session.getValue());
+		});
 	});
 
 	lua.addEventListener('output', (event) => {
-	
-		console.log(event.detail.join("\n"));
-		// outputArea.write(event.detail.join("\n"));
-	
+
+		setTimeout(()=>status.innerText = 'Lua loaded & ready!', 50);
+
+		const row = document.createElement('div');
+
+		row.innerText = event.detail.join("\n");
+		row.setAttribute('tabindex', -1);
+		
+		row.classList.add('row');
+
+		output.append(row);
 	});
-
-
-	// console.log(LuaBin, 123);
-
-	// const lua = new LuaBin({
-
-	// 	postRun: () => {
-
-	// 		console.log('Module ready!');
-
-	// 		lua.ccall(
-	// 			'lua_init'
-	// 			, 'number'
-	// 			, []
-	// 			, []
-	// 		);
-
-	// 		lua.ccall(
-	// 			'lua_run'
-	// 			, 'number'
-	// 			, ['string']
-	// 			, ['for i=1,10 do print(i) end']
-	// 		);
-
-	// 		lua.ccall(
-	// 			'lua_run'
-	// 			, 'number'
-	// 			, ['string']
-	// 			, ['x=10']
-	// 		);
-
-	// 		lua.ccall(
-	// 			'lua_run'
-	// 			, 'number'
-	// 			, ['string']
-	// 			, ['print("" .. x .. "\\n")']
-	// 		);
-		
-	// 	}
-
-	// 	, 'print': (text) => {
-		
-	// 		console.log('Out:' + text);
-
-	// 	}
-		
-	// 	, 'printErr': function(text) {
-
-	// 		console.error('Err: ' + text);
-
-	// 	}
-
-	// 	, wasmMemory: new WebAssembly.Memory({
-	// 		initial:  128
-	// 	})
-
-	// });
-
 
 });

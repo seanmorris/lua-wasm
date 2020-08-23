@@ -9918,54 +9918,39 @@ if (window && document) {
 "use strict";
 
 document.addEventListener('DOMContentLoaded', function () {
+  var input = document.querySelector('.input  textarea');
+  var output = document.querySelector('.output > * > *');
+  var run = document.querySelector('[data-run]');
+  var status = document.querySelector('[data-status]');
+  status.innerText = 'Loading...';
+  var editor = ace.edit(input);
+  editor.session.setMode("ace/mode/lua");
+
   var Lua = require('./Lua').Lua;
 
   var lua = new Lua();
   lua.addEventListener('ready', function (event) {
-    console.log('Lua ready!');
-    lua.run('for i=1,10 do print(i) end');
+    status.innerText = 'Lua loaded & ready!';
+    run.addEventListener('click', function () {
+      status.innerText = 'Executing...';
+
+      while (output.firstChild) {
+        output.firstChild.remove();
+      }
+
+      lua.run(editor.session.getValue());
+    });
   });
   lua.addEventListener('output', function (event) {
-    console.log(event.detail.join("\n")); // outputArea.write(event.detail.join("\n"));
-  }); // console.log(LuaBin, 123);
-  // const lua = new LuaBin({
-  // 	postRun: () => {
-  // 		console.log('Module ready!');
-  // 		lua.ccall(
-  // 			'lua_init'
-  // 			, 'number'
-  // 			, []
-  // 			, []
-  // 		);
-  // 		lua.ccall(
-  // 			'lua_run'
-  // 			, 'number'
-  // 			, ['string']
-  // 			, ['for i=1,10 do print(i) end']
-  // 		);
-  // 		lua.ccall(
-  // 			'lua_run'
-  // 			, 'number'
-  // 			, ['string']
-  // 			, ['x=10']
-  // 		);
-  // 		lua.ccall(
-  // 			'lua_run'
-  // 			, 'number'
-  // 			, ['string']
-  // 			, ['print("" .. x .. "\\n")']
-  // 		);
-  // 	}
-  // 	, 'print': (text) => {
-  // 		console.log('Out:' + text);
-  // 	}
-  // 	, 'printErr': function(text) {
-  // 		console.error('Err: ' + text);
-  // 	}
-  // 	, wasmMemory: new WebAssembly.Memory({
-  // 		initial:  128
-  // 	})
-  // });
+    setTimeout(function () {
+      return status.innerText = 'Lua loaded & ready!';
+    }, 50);
+    var row = document.createElement('div');
+    row.innerText = event.detail.join("\n");
+    row.setAttribute('tabindex', -1);
+    row.classList.add('row');
+    output.append(row);
+  });
 });
 });
 
