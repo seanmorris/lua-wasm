@@ -1,0 +1,25 @@
+{
+	"name": "lua-wasm",
+	"version": "0.0.0",
+	"description": "lua interpreter bindings for the browser.",
+	"main": "index.js",
+	"author": "Sean Morris",
+	"license": "Apache-2.0",
+	"scripts": {
+		"build": "babel source --out-dir .",
+		"build-test": "babel source test --out-dir ."
+	},
+	"dependencies": {},
+	"devDependencies": {
+		"@babel/cli": "^7.8.4",
+		"@babel/core": "^7.8.7",
+		"@babel/preset-env": "^7.0.0",
+		"babel-brunch": "^7.0.1",
+		"babel-minify": "^0.5.1",
+		"babel-preset-es2015": "^6.24.1",
+		"brunch": "^3.0.0",
+		"clean-css-brunch": "^3.0.0",
+		"raw-brunch": "^1.0.2",
+		"uglify-js-brunch": "^2.10.0"
+	}
+}
