@@ -2500,9 +2500,9 @@ var Lua = function () {
       // the next.
       // inputs
       var method = 'native-wasm';
-      var wasmTextFile = 'lua-web-bin.wast';
+      var wasmTextFile = '/lua-wasm/lua-web-bin.wast';
       var wasmBinaryFile = '/lua-wasm/lua-web-bin.wasm';
-      var asmjsCodeFile = 'lua-web-bin.temp.asm.js';
+      var asmjsCodeFile = '/lua-wasm/lua-web-bin.temp.asm.js';
 
       if (!isDataURI(wasmTextFile)) {
         wasmTextFile = locateFile(wasmTextFile);
